@@ -17,10 +17,13 @@ def analyze():
     text = request.form['text']
     prediction = model.predict([text])
     sentiment = 'neutral'
-    if prediction > 0.5:
+
+    # Ensure prediction output is in the correct shape for comparison
+    if prediction[0][0] > 0.5:
         sentiment = 'positiv'
-    elif prediction < 0.5:
+    elif prediction[0][0] < 0.5:
         sentiment = 'negativ'
+
     return jsonify({'sentiment': sentiment})
 
 if __name__ == '__main__':
