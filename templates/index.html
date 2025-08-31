@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stimmungsanalysator</title>
+</head>
+<body>
+    <h1>AI-basierter Stimmungsanalysator</h1>
+    <form id="textForm">
+        <textarea name="text" rows="10" cols="30" placeholder="Geben Sie Ihren Text hier ein..."></textarea><br>
+        <button type="submit">Analysieren</button>
+    </form>
+    <h2 id="result"></h2>
+    <script>
+        document.getElementById('textForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            fetch('/analyze', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('result').innerText = 'Stimmung: ' + data.sentiment;
+            });
+        });
+    </script>
+</body>
+</html>
